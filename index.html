@@ -3,18 +3,19 @@
 <head>
   <title>Important Survey 😌</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
   <style>
     body {
       font-family: Arial;
       text-align: center;
       background: linear-gradient(135deg, #ffe6f0, #fff0f5);
       padding: 20px;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     h1, h2 {
       color: #ff4d88;
-      animation: fadeIn 1s ease;
     }
 
     button {
@@ -27,7 +28,7 @@
       border: none;
       background: #ff66a3;
       color: white;
-      transition: transform 0.2s;
+      transition: 0.2s;
     }
 
     button:hover {
@@ -42,15 +43,6 @@
     }
 
     .hidden { display: none; }
-
-    .fade {
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
 
     #progressBar {
       width: 0%;
@@ -67,20 +59,19 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
-
   </style>
 </head>
 
 <body>
 
-<!-- START PAGE -->
+<!-- START -->
 <div id="startPage">
   <h1>Hey 😌</h1>
-  <p>I made something for you… don’t overthink it 😂</p>
+  <p>This is a very serious test. No cheating 😂</p>
   <button onclick="startQuiz()">Start</button>
 </div>
 
-<!-- QUIZ PAGE -->
+<!-- QUIZ -->
 <div id="quizPage" class="hidden">
   <div id="progressContainer">
     <div id="progressBar"></div>
@@ -91,30 +82,119 @@
   <div id="reaction"></div>
 </div>
 
-<!-- FINAL PAGE -->
+<!-- FINAL -->
 <div id="final" class="hidden">
   <h1>Results are in… 😏</h1>
   <p id="resultText"></p>
-  <p>Okay jokes apart… I like this version of us 🤍</p>
+  <p>Conclusion: I’m still your favorite person 😌</p>
 </div>
 
 <script>
-const name = "YOU"; // change her name
+const name = "YOU"; // change name
 
 let score = 0;
 let qIndex = 0;
 
 const questions = [
-  { q: "First impression of me? 😏", options: [["Decent",1],["Overrated",0],["Wow 👀",2]] },
-  { q: "Who liked whom first? 😂", options: [["You 😌",2],["Me 😌",0],["Mutual",1]] },
-  { q: "My most annoying habit? 😤", options: [["Overthinking",1],["Too cute",2],["Late replies",1],["All 😑",0]] },
-  { q: "Secretly like what about me? 👀", options: [["Personality",1],["Face",2],["Vibe",2],["Won’t tell",0]] },
-  { q: "If we meet now? 😏", options: [["Food",2],["Drive",2],["Fight+chill",1],["Stare 😌",2]] },
-  { q: "Describe us 😂", options: [["Complicated cute",2],["Not just friends",2],["Chaos+comfort",2],["Series",1]] },
-  { q: "Miss me? 👀", options: [["Yes",2],["No",0],["Maybe",1],["Next 🙄",1]] },
-  { q: "If I vanish 1 day? 😏", options: [["Peace",0],["Notice",1],["Text first",2],["FBI 🔍",2]] },
-  { q: "Rate me 😌", options: [["10/10",2],["11/10",3],["9/10",1],["No answer 😏",2]] },
-  { q: "Flirt or behave? 😇", options: [["Flirt 😏",3],["Behave",0],["Depends",1],["You can’t behave",2]] }
+
+  {
+    q: "Harsh is the most beautiful boy ever? 😌",
+    options: [
+      ["Yes obviously 😍", 3],
+      ["No 😏", 0, "noButton"]
+    ]
+  },
+
+  {
+    q: "Be honest… you enjoy talking to me, right? 😏",
+    options: [
+      ["Yes", 2],
+      ["No", 0],
+      ["Sometimes", 1],
+      ["Depends on my mood 😂", 1]
+    ]
+  },
+
+  {
+    q: "If I stop texting you suddenly… 😌",
+    options: [
+      ["I won’t notice", 0],
+      ["I’ll notice", 1],
+      ["I’ll text first", 2],
+      ["I’ll stalk you 😂", 3]
+    ]
+  },
+
+  {
+    q: "What am I to you? 👀",
+    options: [
+      ["Friend 🙂", 1],
+      ["Best person ever 😌", 3],
+      ["Annoying but nice", 2],
+      ["Confusing 😂", 2]
+    ]
+  },
+
+  {
+    q: "Do you miss me sometimes? 😏",
+    options: [
+      ["Yes", 2],
+      ["No", 0],
+      ["Maybe", 1],
+      ["I won’t admit", 3]
+    ]
+  },
+
+  {
+    q: "If we meet right now? 😌",
+    options: [
+      ["Food first", 2],
+      ["Long drive", 2],
+      ["Fight then chill", 2],
+      ["Ignore you", 0]
+    ]
+  },
+
+  {
+    q: "How important am I? 😏",
+    options: [
+      ["Very", 2],
+      ["Normal", 1],
+      ["Not much", 0],
+      ["Don’t ask tough questions 😂", 2]
+    ]
+  },
+
+  {
+    q: "You think about me randomly? 👀",
+    options: [
+      ["Yes", 2],
+      ["No", 0],
+      ["Sometimes", 1],
+      ["Stop exposing me 😭", 3]
+    ]
+  },
+
+  {
+    q: "Rate my personality 😌",
+    options: [
+      ["10/10", 3],
+      ["11/10", 4],
+      ["9/10", 2],
+      ["Could improve 😂", 1]
+    ]
+  },
+
+  {
+    q: "Final question… should I flirt or behave? 😇",
+    options: [
+      ["Flirt 😏", 3],
+      ["Behave 🙂", 0],
+      ["Depends", 1],
+      ["You can’t behave anyway", 2]
+    ]
+  }
+
 ];
 
 function startQuiz() {
@@ -131,7 +211,6 @@ function loadQuestion() {
 
   const q = questions[qIndex];
   document.getElementById("question").innerText = q.q;
-  document.getElementById("question").classList.add("fade");
 
   const optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
@@ -139,12 +218,27 @@ function loadQuestion() {
   q.options.forEach(opt => {
     const btn = document.createElement("button");
     btn.innerText = opt[0];
-    btn.onclick = () => selectOption(opt[1]);
-    btn.classList.add("fade");
+
+    if (opt[2] === "noButton") {
+      btn.onmouseover = () => moveButton(btn);
+      btn.ontouchstart = () => moveButton(btn);
+    } else {
+      btn.onclick = () => selectOption(opt[1]);
+    }
+
     optionsDiv.appendChild(btn);
   });
 
   updateProgress();
+}
+
+function moveButton(btn) {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+
+  btn.style.position = "absolute";
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
 }
 
 function selectOption(points) {
@@ -154,19 +248,19 @@ function selectOption(points) {
     "Hmm 🤨",
     "Interesting 😏",
     "Noted 😂",
-    "Okay okay 👀",
-    "Caught you 😌"
+    "Caught you 😌",
+    "Suspicious 👀"
   ];
 
   document.getElementById("reaction").innerText =
     reactions[Math.floor(Math.random() * reactions.length)];
 
   qIndex++;
-  setTimeout(loadQuestion, 700);
+  setTimeout(loadQuestion, 600);
 }
 
 function updateProgress() {
-  const progress = ((qIndex) / questions.length) * 100;
+  const progress = (qIndex / questions.length) * 100;
   document.getElementById("progressBar").style.width = progress + "%";
 }
 
@@ -176,12 +270,12 @@ function showResult() {
 
   let text = "";
 
-  if (score >= 18) {
-    text = name + ", this is dangerous… you’re clearly obsessed with me 😌";
+  if (score >= 20) {
+    text = name + ", this is dangerous… you clearly like me a LOT 😌";
   } else if (score >= 12) {
     text = "Okay okay… you like me more than you admit 😏";
   } else {
-    text = "You’re acting innocent… I don’t trust this score 😂";
+    text = "You’re pretending… I don’t trust this 😂";
   }
 
   document.getElementById("resultText").innerText = text;
