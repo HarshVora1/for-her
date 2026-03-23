@@ -1,200 +1,342 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-  <title>Important Survey 😌</title>
+  <title>A Survey About Harsh 😌</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose: #ff4070; --blush: #ff7aa2; --cream: #fff5f8;
+      --text: #2a1a20; --muted: #a07080; --card: rgba(255,255,255,0.82);
+    }
     body {
-      font-family: Arial;
-      text-align: center;
-      background: linear-gradient(135deg, #ffe6f0, #fff0f5);
-      padding: 20px;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
-
-    h1, h2 {
-      color: #ff4d88;
+    .petal {
+      position: fixed; border-radius: 50% 10% 50% 10%;
+      opacity: 0.08; pointer-events: none;
+      animation: floatPetal linear infinite;
     }
-
-    button {
-      display: block;
-      width: 80%;
-      margin: 10px auto;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 12px;
-      border: none;
-      background: #ff66a3;
-      color: white;
-      transition: 0.2s;
+    @keyframes floatPetal {
+      0%   { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-10vh) rotate(360deg); }
     }
-
-    button:hover {
-      transform: scale(1.05);
+    .page {
+      position: relative; z-index: 1;
+      width: min(500px, 94vw);
+      background: var(--card); backdrop-filter: blur(18px);
+      border-radius: 28px; padding: 40px 36px;
+      box-shadow: 0 8px 48px rgba(255,64,112,0.14), 0 2px 0 rgba(255,255,255,0.9) inset;
+      border: 1px solid rgba(255,255,255,0.65);
+      animation: slideUp 0.5s cubic-bezier(0.22,1,0.36,1);
     }
-
-    #reaction {
-      margin-top: 10px;
-      font-style: italic;
-      color: #555;
-      min-height: 20px;
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
     }
+    .hidden { display: none !important; }
 
-    .hidden { display: none; }
+```
+#startPage { text-align: center; }
+.eyebrow { font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--blush); font-weight:500; margin-bottom:14px; }
+h1 { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,6vw,2.6rem); color:var(--text); line-height:1.2; margin-bottom:12px; }
+h1 em { font-style:italic; color:var(--rose); }
+.subtitle { color:var(--muted); font-size:14.5px; line-height:1.6; margin-bottom:30px; }
+.btn-primary {
+  display:inline-block; padding:14px 40px;
+  background:linear-gradient(135deg,var(--rose),var(--blush));
+  color:white; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500;
+  border:none; border-radius:50px; cursor:pointer;
+  box-shadow:0 6px 24px rgba(255,64,112,0.35);
+  transition:transform 0.18s, box-shadow 0.18s;
+}
+.btn-primary:hover { transform:translateY(-2px) scale(1.03); box-shadow:0 10px 32px rgba(255,64,112,0.42); }
 
-    #progressBar {
-      width: 0%;
-      height: 8px;
-      background: #ff4d88;
-      border-radius: 10px;
-      transition: width 0.4s ease;
-      margin-bottom: 15px;
-    }
+#progressContainer { width:100%; height:4px; background:rgba(255,64,112,0.12); border-radius:99px; margin-bottom:10px; overflow:hidden; }
+#progressBar { height:100%; background:linear-gradient(90deg,var(--rose),var(--blush)); border-radius:99px; transition:width 0.4s cubic-bezier(0.22,1,0.36,1); width:0%; }
+#timerBar { height:3px; background:rgba(255,64,112,0.1); border-radius:99px; margin-bottom:18px; overflow:hidden; opacity:0; transition:opacity 0.3s; }
+#timerFill { height:100%; background:linear-gradient(90deg,#ffb3cb,var(--rose)); border-radius:99px; width:100%; }
+.q-count { font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--blush); font-weight:500; margin-bottom:10px; margin-top:4px; }
+#question { font-family:'Playfair Display',serif; font-size:clamp(1.1rem,3.6vw,1.42rem); color:var(--text); line-height:1.5; margin-bottom:22px; min-height:48px; }
+#options { display:flex; flex-direction:column; gap:9px; }
 
-    #progressContainer {
-      width: 100%;
-      background: #ffd6e7;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
+.opt-btn {
+  width:100%; padding:12px 18px;
+  background:white; color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:14px;
+  text-align:left; border:1.5px solid rgba(255,64,112,0.14);
+  border-radius:14px; cursor:pointer; transition:all 0.18s;
+  box-shadow:0 2px 8px rgba(255,64,112,0.04);
+  line-height:1.4;
+}
+.opt-btn:hover { border-color:var(--rose); transform:translateX(4px); box-shadow:0 4px 16px rgba(255,64,112,0.12); }
+.opt-btn.selected { background:linear-gradient(135deg,var(--rose),var(--blush)); color:white; border-color:transparent; box-shadow:0 6px 20px rgba(255,64,112,0.3); pointer-events:none; }
+.opt-btn.dimmed { opacity:0.32; pointer-events:none; }
+.opt-btn.wrong-flash { background:#ffe0ea !important; border-color:var(--rose) !important; }
+
+.runaway-btn {
+  position:fixed !important; z-index:9999;
+  padding:12px 18px; background:white; color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:14px;
+  border:1.5px solid rgba(255,64,112,0.2); border-radius:14px;
+  cursor:pointer; white-space:nowrap;
+  box-shadow:0 2px 12px rgba(255,64,112,0.1);
+  transition:left 0.1s ease, top 0.1s ease;
+}
+
+#reaction {
+  margin-top:14px; font-style:italic;
+  font-family:'Playfair Display',serif;
+  color:var(--muted); font-size:13.5px;
+  min-height:20px; text-align:center;
+}
+
+#final { text-align:center; }
+.result-emoji { font-size:3.5rem; margin-bottom:14px; display:block; animation:pop 0.5s cubic-bezier(0.22,1,0.36,1); }
+@keyframes pop { 0%{transform:scale(0.4);opacity:0;} 80%{transform:scale(1.1);} 100%{transform:scale(1);opacity:1;} }
+#final h1 { font-size:clamp(1.5rem,5vw,2rem); margin-bottom:16px; }
+#resultText { font-size:15px; color:var(--text); line-height:1.75; margin-bottom:10px; }
+.verdict { font-family:'Playfair Display',serif; font-style:italic; color:var(--rose); font-size:15px; margin-top:12px; }
+.restart-btn { margin-top:26px; padding:11px 30px; background:transparent; border:1.5px solid var(--rose); color:var(--rose); font-family:'DM Sans',sans-serif; font-size:14px; border-radius:50px; cursor:pointer; transition:all 0.18s; }
+.restart-btn:hover { background:var(--rose); color:white; transform:scale(1.03); }
+
+@keyframes cardShake {
+  0%,100%{transform:translateX(0)}
+  15%{transform:translateX(-8px)} 30%{transform:translateX(8px)}
+  45%{transform:translateX(-6px)} 60%{transform:translateX(6px)}
+  75%{transform:translateX(-3px)} 90%{transform:translateX(3px)}
+}
+.shaking { animation: cardShake 0.45s ease !important; }
+```
+
   </style>
 </head>
-
 <body>
 
-<!-- START -->
-<div id="startPage">
-  <h1>Hey 😌</h1>
-  <p>This is a very serious test. No cheating 😂</p>
-  <button onclick="startQuiz()">Start</button>
+<div id="startPage" class="page">
+  <p class="eyebrow">🔒 Official Research</p>
+  <h1>A Survey About<br><em>Harsh</em> 😌</h1>
+  <p class="subtitle">You have been selected to participate<br>in this very important study.<br>There is no exit. 😇</p>
+  <button class="btn-primary" onclick="startQuiz()">Fine. Let's go →</button>
 </div>
 
-<!-- QUIZ -->
-<div id="quizPage" class="hidden">
-  <div id="progressContainer">
-    <div id="progressBar"></div>
-  </div>
-
+<div id="quizPage" class="page hidden">
+  <div id="progressContainer"><div id="progressBar"></div></div>
+  <div id="timerBar"><div id="timerFill"></div></div>
+  <p class="q-count" id="qCount"></p>
   <h2 id="question"></h2>
   <div id="options"></div>
   <div id="reaction"></div>
 </div>
 
-<!-- FINAL -->
-<div id="final" class="hidden">
-  <h1>Results are in… 😏</h1>
+<div id="final" class="page hidden">
+  <span class="result-emoji" id="resultEmoji"></span>
+  <h1>Results Are In 😌</h1>
   <p id="resultText"></p>
-  <p>Conclusion: I’m still your favorite person 😌</p>
+  <p class="verdict" id="verdictLine"></p>
+  <button class="restart-btn" onclick="restart()">Retake (try lying this time 😇)</button>
 </div>
 
 <script>
-const name = "YOU"; // change name
+const petalColors = ['#ff4070','#ff7aa2','#ffb3cb','#ffd6e7'];
+for (let i = 0; i < 14; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const s = 28 + Math.random() * 55;
+  p.style.cssText = `width:${s}px;height:${s}px;background:${petalColors[i%4]};left:${Math.random()*100}vw;animation-duration:${13+Math.random()*17}s;animation-delay:-${Math.random()*22}s;`;
+  document.body.appendChild(p);
+}
 
-let score = 0;
-let qIndex = 0;
+let score = 0, qIndex = 0;
+let timerInterval = null, runawayBtn = null;
+const answers = {}; // stores all her answers
 
 const questions = [
-
   {
-    q: "Harsh is the most beautiful boy ever? 😌",
+    type: "runaway",
+    q: "Let's start easy. Harsh is good looking — yes or no? 😌",
     options: [
-      ["Yes obviously 😍", 3],
-      ["No 😏", 0, "noButton"]
-    ]
+      ["Yes, annoyingly so 😩", 3],
+      ["No 🙄", 0, "runaway"]
+    ],
+    reaction: "The button ran. The truth remains. 😌"
   },
-
   {
-    q: "Be honest… you enjoy talking to me, right? 😏",
+    type: "normal",
+    q: "What's Harsh's best physical feature? Be honest. 👀",
     options: [
-      ["Yes", 2],
-      ["No", 0],
-      ["Sometimes", 1],
-      ["Depends on my mood 😂", 1]
-    ]
+      ["The face 😍", 2],
+      ["The body 💪", 2],
+      ["...the booty 🍑 (we don't talk about it but we know)", 3],
+      ["All of the above — it's genuinely unfair", 4]
+    ],
+    reaction: "Noted. Filed. Never deleting this. 😌"
   },
-
   {
-    q: "If I stop texting you suddenly… 😌",
+    type: "timed",
+    timerSecs: 4,
+    q: "Quick — first reaction when you see a text from Harsh? ⚡",
     options: [
-      ["I won’t notice", 0],
-      ["I’ll notice", 1],
-      ["I’ll text first", 2],
-      ["I’ll stalk you 😂", 3]
-    ]
+      ["Smile before I can stop myself 🙈", 3],
+      ["Eyes roll, still opening it immediately 🙃", 2],
+      ["A sigh. A smile. In that order. 😮‍💨", 3],
+      ["Unbothered. Completely unbothered. 😐", 1]
+    ],
+    forcedAnswer: "Time's up — the smile happened before you could think about it 😏",
+    forcedPoints: 3,
+    reaction: "The 4 seconds said everything 👀"
   },
-
   {
-    q: "What am I to you? 👀",
+    type: "normal",
+    q: "What do you enjoy more? 😇",
     options: [
-      ["Friend 🙂", 1],
-      ["Best person ever 😌", 3],
-      ["Annoying but nice", 2],
-      ["Confusing 😂", 2]
-    ]
+      ["Kissing Harsh 💋", 3],
+      ["Hitting Harsh 👊 (valid)", 2],
+      ["Not talking to Harsh 😤 (temporary)", 1],
+      ["Cuddling with Harsh 🫂", 3],
+      ["Ahem… 😶‍🌫️", 4]
+    ],
+    reaction: "The last option just sitting there. Very telling. 😌"
   },
-
   {
-    q: "Do you miss me sometimes? 😏",
+    type: "normal",
+    q: "Harsh gifted you a nail set with a very sexy colour. Current status? 💅",
     options: [
-      ["Yes", 2],
-      ["No", 0],
-      ["Maybe", 1],
-      ["I won’t admit", 3]
-    ]
+      ["Used and loved, obviously 💅", 3],
+      ["Sitting prettily in my room, will use it very soon", 1],
+      ["Still in the box. It's been a while. 🙃", 0],
+      ["I'm choosing not to answer this 😇", 0]
+    ],
+    reaction: "He's not upset. He's just documenting. 😶"
   },
-
   {
-    q: "If we meet right now? 😌",
+    type: "runaway",
+    q: "Follow up — the detangling comb. Has it been used? 😌",
     options: [
-      ["Food first", 2],
-      ["Long drive", 2],
-      ["Fight then chill", 2],
-      ["Ignore you", 0]
-    ]
+      ["Yes! Regularly! 🥰", 3],
+      ["No 😇", 0, "runaway"]
+    ],
+    reaction: "The button already knew the answer 😂"
   },
-
   {
-    q: "How important am I? 😏",
+    type: "normal",
+    q: "Best thing Harsh has ever done for you? 🏆",
     options: [
-      ["Very", 2],
-      ["Normal", 1],
-      ["Not much", 0],
-      ["Don’t ask tough questions 😂", 2]
-    ]
+      ["Introduced me to tadgola ice cream 🍦 — genuinely life changing", 3],
+      ["Clicked 10,000 photos of me like a personal photographer 📸", 2],
+      ["Always made me feel safe 🫂", 3],
+      ["The gifts. He just gets it. 🎁", 2]
+    ],
+    reaction: "He's blushing. He'll never admit it. 😌"
   },
-
   {
-    q: "You think about me randomly? 👀",
+    type: "order",
+    q: "Best trip so far? 🌍",
     options: [
-      ["Yes", 2],
-      ["No", 0],
-      ["Sometimes", 1],
-      ["Stop exposing me 😭", 3]
-    ]
+      ["Goa 🏖️", 3],
+      ["Nashik 🍇", 2],
+      ["Igatpuri 🏔️", 2],
+      ["Pune 🌆", 1]
+    ],
+    reaction: "Already thinking about the next one 😌"
   },
-
   {
-    q: "Rate my personality 😌",
+    type: "normal",
+    q: "Hypothetical: Harsh and you are stuck together for 24 hours, no escape. You… 🕐",
     options: [
-      ["10/10", 3],
-      ["11/10", 4],
-      ["9/10", 2],
-      ["Could improve 😂", 1]
-    ]
+      ["Actually have the best day, annoyingly 😭", 3],
+      ["Fight for 2 hours, laugh for 22 😂", 3],
+      ["Make him do all the talking. He will.", 2],
+      ["Secretly enjoy every minute, tell no one 🤫", 4]
+    ],
+    reaction: "Already know which one you picked 😌"
   },
-
   {
-    q: "Final question… should I flirt or behave? 😇",
+    type: "timed",
+    timerSecs: 5,
+    q: "Hypothetical: Harsh shows up with flowers and zero explanation. You… 🌸",
     options: [
-      ["Flirt 😏", 3],
-      ["Behave 🙂", 0],
-      ["Depends", 1],
-      ["You can’t behave anyway", 2]
-    ]
+      ["Ask zero questions, accept the flowers 🌸", 3],
+      ["Suspicious but smiling 😏", 3],
+      ["Immediately: what did you do 😂", 2],
+      ["Pretend to be annoyed while secretly delighted 🙃", 4]
+    ],
+    forcedAnswer: "The smile happened before the suspicion. We all know. 😌",
+    forcedPoints: 3,
+    reaction: "The flowers worked. They always work. 😌"
+  },
+  {
+    type: "normal",
+    q: "Hypothetical: there's one last tadgola ice cream. Harsh wants it too. You… 🍦",
+    options: [
+      ["Obviously I'm taking it 😤", 2],
+      ["Split it, but I get the bigger half", 2],
+      ["Give it to him. Begrudgingly. 🙃", 1],
+      ["Let him have it and pretend I don't want it (I want it)", 3]
+    ],
+    reaction: "He introduced you to it and this is how it ends 😂"
+  },
+  {
+    type: "shake",
+    q: "If you could change one thing about Harsh, what would it be? 🤔",
+    options: [
+      ["Stop fighting so much 🥊", 2, "ok"],
+      ["DO NOT colour the hair again 😭", 3, "correct"],
+      ["Talk less sometimes 😅", 2, "ok"],
+      ["Nothing actually. He's fine as is. 😌", 3, "correct"]
+    ],
+    reaction: "Completely valid. The hair especially. 😂",
+    shakeReaction: "The card physically disagreed with that one 😂"
+  },
+  {
+    type: "normal",
+    q: "Hypothetical: Harsh is in a bad mood. Your move? 🌧️",
+    options: [
+      ["Sit with him quietly until it passes 🫂", 3],
+      ["Make him laugh within 10 minutes, guaranteed", 3],
+      ["Give him space but check in every 20 mins 📱", 2],
+      ["Pretend not to notice while very much noticing 👀", 2]
+    ],
+    reaction: "You already knew exactly what you'd do 😌"
+  },
+  {
+    type: "normal",
+    q: "You feel safest when… 🫂",
+    options: [
+      ["Harsh is around, annoyingly enough 🙃", 3],
+      ["He's there and somehow everything feels okay", 3],
+      ["On a late call with him 📞", 2],
+      ["He's nearby but I won't give him the satisfaction of saying it", 4]
+    ],
+    reaction: "He already knew. 😌"
+  },
+  {
+    type: "normal",
+    q: "How would you describe Harsh in one line? 📝",
+    options: [
+      ["A lot — but the good kind of a lot 🫠", 3],
+      ["Annoying with great intentions 😤🥺", 2],
+      ["My safe place who never runs out of things to say 😭", 4],
+      ["Too much and somehow still not enough 😌", 4]
+    ],
+    reaction: "He is going to quote this forever. Fair warning. 😌"
+  },
+  {
+    type: "runaway",
+    q: "Last one — he's a lot, but you wouldn't want it any other way. Right? 😏",
+    options: [
+      ["...fine. Yes. 😭", 3],
+      ["Absolutely not 😤", 0, "runaway"]
+    ],
+    reaction: "The button ran so you didn't have to say it out loud 😂"
   }
-
 ];
 
 function startQuiz() {
@@ -203,82 +345,238 @@ function startQuiz() {
   loadQuestion();
 }
 
+function clearTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById("timerBar").style.opacity = "0";
+}
+
+function removeRunaway() {
+  if (runawayBtn) { runawayBtn.remove(); runawayBtn = null; }
+}
+
 function loadQuestion() {
-  if (qIndex >= questions.length) {
-    showResult();
-    return;
-  }
-
+  clearTimer(); removeRunaway();
+  if (qIndex >= questions.length) { showResult(); return; }
   const q = questions[qIndex];
+  document.getElementById("qCount").innerText = `Question ${qIndex + 1} of ${questions.length}`;
   document.getElementById("question").innerText = q.q;
-
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
-
-  q.options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.innerText = opt[0];
-
-    if (opt[2] === "noButton") {
-      btn.onmouseover = () => moveButton(btn);
-      btn.ontouchstart = () => moveButton(btn);
-    } else {
-      btn.onclick = () => selectOption(opt[1]);
-    }
-
-    optionsDiv.appendChild(btn);
-  });
-
+  document.getElementById("reaction").innerText = "";
+  document.getElementById("options").innerHTML = "";
   updateProgress();
+
+  if      (q.type === "runaway") buildRunaway(q);
+  else if (q.type === "timed")   { buildNormal(q); startTimer(q); }
+  else if (q.type === "shake")   buildShake(q);
+  else if (q.type === "order")   buildOrder(q);
+  else                           buildNormal(q);
 }
 
-function moveButton(btn) {
-  const x = Math.random() * (window.innerWidth - 100);
-  const y = Math.random() * (window.innerHeight - 100);
-
-  btn.style.position = "absolute";
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
-}
-
-function selectOption(points) {
+function pickBtn(btn, points, reaction, answerLabel) {
+  clearTimer(); removeRunaway();
+  document.querySelectorAll(".opt-btn").forEach(b => { b.onclick = null; b.classList.add("dimmed"); });
+  btn.classList.remove("dimmed");
+  btn.classList.add("selected");
   score += points;
 
-  const reactions = [
-    "Hmm 🤨",
-    "Interesting 😏",
-    "Noted 😂",
-    "Caught you 😌",
-    "Suspicious 👀"
-  ];
+  // Store the answer using the question text as key
+  const qText = questions[qIndex].q;
+  answers[`Q${qIndex + 1}: ${qText}`] = answerLabel || btn.innerText;
 
-  document.getElementById("reaction").innerText =
-    reactions[Math.floor(Math.random() * reactions.length)];
-
+  document.getElementById("reaction").innerText = reaction || "Noted 😏";
   qIndex++;
-  setTimeout(loadQuestion, 600);
+  setTimeout(loadQuestion, 850);
+}
+
+function buildNormal(q) {
+  const div = document.getElementById("options");
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "opt-btn";
+    btn.innerText = opt[0];
+    btn.onclick = () => pickBtn(btn, opt[1], q.reaction, opt[0]);
+    div.appendChild(btn);
+  });
+}
+
+function buildShake(q) {
+  const div = document.getElementById("options");
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "opt-btn";
+    btn.innerText = opt[0];
+    if (opt[2] === "wrong") {
+      btn.onclick = () => {
+        btn.classList.add("wrong-flash");
+        setTimeout(() => btn.classList.remove("wrong-flash"), 500);
+        const card = document.getElementById("quizPage");
+        card.classList.remove("shaking"); void card.offsetWidth; card.classList.add("shaking");
+        setTimeout(() => card.classList.remove("shaking"), 500);
+        document.getElementById("reaction").innerText = q.shakeReaction;
+      };
+    } else {
+      btn.onclick = () => pickBtn(btn, opt[1], q.reaction, opt[0]);
+    }
+    div.appendChild(btn);
+  });
+}
+
+function buildOrder(q) {
+  const div = document.getElementById("options");
+  const btns = [];
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "opt-btn";
+    btn.innerText = opt[0];
+    btn.onclick = () => pickBtn(btn, opt[1], q.reaction, opt[0]);
+    div.appendChild(btn);
+    btns.push(btn);
+  });
+  setTimeout(() => {
+    const shuffled = [...btns].sort(() => Math.random() - 0.5);
+    shuffled.forEach(b => div.appendChild(b));
+    document.getElementById("reaction").innerText = "shuffled so you can't just pick first 😇";
+    setTimeout(() => {
+      const r = document.getElementById("reaction");
+      if (r.innerText.startsWith("shuffled")) r.innerText = "";
+    }, 1200);
+  }, 650);
+}
+
+function buildRunaway(q) {
+  const div = document.getElementById("options");
+  const yesOpt = q.options.find(o => o[2] !== "runaway");
+  const noOpt  = q.options.find(o => o[2] === "runaway");
+
+  const yesBtn = document.createElement("button");
+  yesBtn.className = "opt-btn";
+  yesBtn.innerText = yesOpt[0];
+  yesBtn.onclick = () => { removeRunaway(); pickBtn(yesBtn, yesOpt[1], q.reaction, yesOpt[0]); };
+  div.appendChild(yesBtn);
+
+  const rb = document.createElement("button");
+  rb.className = "runaway-btn";
+  rb.innerText = noOpt[0];
+  document.body.appendChild(rb);
+  runawayBtn = rb;
+
+  setTimeout(() => {
+    const rect = div.getBoundingClientRect();
+    rb.style.left = rect.left + "px";
+    rb.style.top  = (rect.top + 64) + "px";
+  }, 60);
+
+  function flee(e) {
+    const cx = e.clientX ?? e.touches?.[0]?.clientX ?? window.innerWidth / 2;
+    const cy = e.clientY ?? e.touches?.[0]?.clientY ?? window.innerHeight / 2;
+    const r  = rb.getBoundingClientRect();
+    const bx = r.left + r.width / 2, by = r.top + r.height / 2;
+    const dx = bx - cx, dy = by - cy;
+    const d  = Math.sqrt(dx * dx + dy * dy) || 1;
+    const push = 165, margin = 18;
+    let nx = bx + (dx / d) * push - r.width / 2;
+    let ny = by + (dy / d) * push - r.height / 2;
+    nx = Math.max(margin, Math.min(window.innerWidth  - r.width  - margin, nx));
+    ny = Math.max(margin, Math.min(window.innerHeight - r.height - margin, ny));
+    rb.style.left = nx + "px";
+    rb.style.top  = ny + "px";
+  }
+  rb.addEventListener("mouseover", flee);
+  rb.addEventListener("touchstart", flee, { passive: true });
+}
+
+function startTimer(q) {
+  const bar  = document.getElementById("timerBar");
+  const fill = document.getElementById("timerFill");
+  bar.style.opacity = "1";
+  fill.style.transition = "none"; fill.style.width = "100%";
+  let elapsed = 0;
+  const total = q.timerSecs * 1000, tick = 50;
+  setTimeout(() => {
+    fill.style.transition = `width ${q.timerSecs}s linear`;
+    fill.style.width = "0%";
+  }, 80);
+  timerInterval = setInterval(() => {
+    elapsed += tick;
+    if (elapsed >= total) {
+      clearInterval(timerInterval); timerInterval = null;
+      document.querySelectorAll(".opt-btn").forEach(b => { b.onclick = null; b.classList.add("dimmed"); });
+      score += q.forcedPoints;
+      // Record forced answer
+      answers[`Q${qIndex + 1}: ${q.q}`] = "⏱️ Timed out — " + q.forcedAnswer;
+      document.getElementById("reaction").innerText = q.forcedAnswer;
+      qIndex++;
+      setTimeout(loadQuestion, 1600);
+    }
+  }, tick);
 }
 
 function updateProgress() {
-  const progress = (qIndex / questions.length) * 100;
-  document.getElementById("progressBar").style.width = progress + "%";
+  document.getElementById("progressBar").style.width = (qIndex / questions.length * 100) + "%";
+}
+
+async function submitToFormspree(resultLabel) {
+  const payload = {
+    ...answers,
+    "Final Score": score,
+    "Result": resultLabel,
+    "Completed At": new Date().toLocaleString()
+  };
+
+  try {
+    await fetch("https://formspree.io/f/mjgaqzbp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {
+    // silent fail — she never needs to know 😌
+  }
 }
 
 function showResult() {
   document.getElementById("quizPage").classList.add("hidden");
   document.getElementById("final").classList.remove("hidden");
 
-  let text = "";
+  const max = questions.reduce((s, q) => s + Math.max(...q.options.map(o => o[1])), 0);
+  const pct = score / max;
 
-  if (score >= 20) {
-    text = name + ", this is dangerous… you clearly like me a LOT 😌";
-  } else if (score >= 12) {
-    text = "Okay okay… you like me more than you admit 😏";
+  let emoji, text, verdict, resultLabel;
+  if (pct >= 0.78) {
+    emoji = "🫶";
+    text = "The results are embarrassingly clear. Every answer pointed the same direction. The nail set situation is the only unresolved matter.";
+    verdict = "Official verdict: she acts unbothered. She is not unbothered. 😌";
+    resultLabel = "Completely obsessed (won't admit it)";
+  } else if (pct >= 0.55) {
+    emoji = "😏";
+    text = "Carefully answered. Very carefully. Like someone who knows this is being monitored. The ahem option, however, was unguarded.";
+    verdict = "Official verdict: the real answers are between the lines. 👀";
+    resultLabel = "Trying to play it cool. Failing.";
+  } else if (pct >= 0.35) {
+    emoji = "🙃";
+    text = "Hard to read. Suspiciously composed. The tadgola ice cream appreciation though — that one was real.";
+    verdict = "Official verdict: the poker face is strong. So is the denial. 😇";
+    resultLabel = "Strong poker face. Very suspicious.";
   } else {
-    text = "You’re pretending… I don’t trust this 😂";
+    emoji = "😂";
+    text = "Either the gifts, the trips, the photos and the tadgola ice cream meant nothing — or someone is playing a very committed game of unbothered. Statistically unlikely.";
+    verdict = "Official verdict: Harsh doesn't believe a single answer here. 😂";
+    resultLabel = "Maximum denial. Iconic.";
   }
 
+  document.getElementById("resultEmoji").innerText = emoji;
   document.getElementById("resultText").innerText = text;
+  document.getElementById("verdictLine").innerText = verdict;
+
+  // Send everything to Formspree silently
+  submitToFormspree(resultLabel);
+}
+
+function restart() {
+  score = 0; qIndex = 0;
+  Object.keys(answers).forEach(k => delete answers[k]);
+  clearTimer(); removeRunaway();
+  document.getElementById("final").classList.add("hidden");
+  document.getElementById("startPage").classList.remove("hidden");
 }
 </script>
 
